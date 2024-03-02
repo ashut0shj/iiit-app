@@ -11,7 +11,7 @@ class DiscoverScreen extends StatelessWidget {
   static const routeName = '/discover';
   @override
   Widget build(BuildContext context) {
-    List<String> tabs = ['Health', 'Politics', 'Art', 'Food', 'Science'];
+    List<String> tabs = ['All', 'Technical', 'Cultural', 'miscellaneous'];
 
     return DefaultTabController(
       initialIndex: 0,
@@ -27,11 +27,27 @@ class DiscoverScreen extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Feed',
+                style: TextStyle(color: Colors.black),
+              ),
+              Image.asset(
+                'assets/logo.png', // Provide the path to your logo image
+                width: 50,
+                height: 50,
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: const BottomNavBar(index: 1),
         body: ListView(
           padding: const EdgeInsets.all(20.0),
-          children: [const _DiscoverNews(), _CategoryNews(tabs: tabs)],
+          children: [
+            _CategoryNews(tabs: tabs),
+          ],
         ),
       ),
     );
@@ -146,60 +162,6 @@ class _CategoryNews extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-}
-
-class _DiscoverNews extends StatelessWidget {
-  const _DiscoverNews({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Discover',
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'News from all over the world',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Search',
-              fillColor: Colors.grey.shade200,
-              filled: true,
-              prefixIcon: const Icon(
-                Icons.search,
-                color: Colors.grey,
-              ),
-              suffixIcon: const RotatedBox(
-                quarterTurns: 1,
-                child: Icon(
-                  Icons.tune,
-                  color: Colors.grey,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 }

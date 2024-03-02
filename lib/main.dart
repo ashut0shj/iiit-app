@@ -13,18 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter News App UI',
+      title: 'IIIT-Student App',
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      initialRoute: '/',
+      initialRoute: DiscoverScreen.routeName, // Set DiscoverScreen as the initial route
       routes: {
-        HomeScreen.routeName: (context) => const HomeScreen(),
-        DiscoverScreen.routeName: (context) => const DiscoverScreen(),
+        DiscoverScreen.routeName: (context) => const DiscoverScreen(), // Use DiscoverScreen as the initial route
         ArticleScreen.routeName: (context) => const ArticleScreen(),
       },
     );
   }
 }
-
-// UI based on https://dribbble.com/shots/15193792-News-iOS-mobile-app/attachments/6937008?mode=media
