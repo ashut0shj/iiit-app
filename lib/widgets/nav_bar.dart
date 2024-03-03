@@ -43,7 +43,7 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('User'),
-            onTap: () {},
+            onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
           ),
           ListTile(
             leading: const Icon(Icons.rss_feed),
