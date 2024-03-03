@@ -144,6 +144,7 @@ class _NewsBody extends StatelessWidget {
   }
 }
 
+
 class _NewsHeadline extends StatelessWidget {
   const _NewsHeadline({
     Key? key,
