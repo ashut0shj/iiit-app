@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/article_model.dart';
 import '../widgets/custom_tag.dart';
 import '../widgets/image_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key? key}) : super(key: key);
@@ -69,8 +70,8 @@ class _NewsBody extends StatelessWidget {
                   Text(
                     article.author,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.white,
-                    ),
+                          color: Colors.white,
+                        ),
                   ),
                 ],
               ),
@@ -118,16 +119,14 @@ class _NewsBody extends StatelessWidget {
           Text(
             article.body,
             style:
-            Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  // Handle register button press
-                },
+                onPressed: () => launchUrl(Uri.parse('https://docs.google.com/forms/d/1RD3cAPM7HWpZo622atupB099lUpij5QF9bvBr5vRfmA/viewform?edit_requested=true')),
                 child: Text('Register'),
               ),
               ElevatedButton(
@@ -143,6 +142,7 @@ class _NewsBody extends StatelessWidget {
     );
   }
 }
+
 
 
 class _NewsHeadline extends StatelessWidget {
