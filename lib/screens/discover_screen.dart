@@ -11,7 +11,7 @@ class DiscoverScreen extends StatelessWidget {
   static const routeName = '/discover';
   @override
   Widget build(BuildContext context) {
-    List<String> tabs = ['All', 'Technical', 'Cultural', 'miscellaneous'];
+    List<String> tabs = ['All', 'Technical', 'Cultural', 'Miscellaneous'];
 
     return DefaultTabController(
       initialIndex: 0,
@@ -20,12 +20,18 @@ class DiscoverScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.black,
-            ),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer(); // Open the drawer when the menu icon is clicked
+                },
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+              );
+            },
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,6 +48,7 @@ class DiscoverScreen extends StatelessWidget {
             ],
           ),
         ),
+        drawer: MyAppDrawer(), // Add the sidebar navigation drawer here
         bottomNavigationBar: const BottomNavBar(index: 1),
         body: ListView(
           padding: const EdgeInsets.all(20.0),
@@ -75,7 +82,7 @@ class _CategoryNews extends StatelessWidget {
                 (tab) => Tab(
                   icon: Text(
                     tab,
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
@@ -120,7 +127,7 @@ class _CategoryNews extends StatelessWidget {
                                     overflow: TextOverflow.clip,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyLarge!
+                                        .bodyText1!
                                         .copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -164,4 +171,70 @@ class _CategoryNews extends StatelessWidget {
       ],
     );
   }
+}
+
+class MyAppDrawer extends StatelessWidget {
+  const MyAppDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text('username'),
+            accountEmail: Text('user@gmail.com'),
+            currentAccountPicture: CircleAvatar(
+              child: ClipOval(
+                child: Icon(
+                  Icons.person_outline, // Using Icon widget instead of IconData directly
+                  size: 90,
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(
+                    'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg'),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.explore),
+            title: Text('Explore'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text('Calendar'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text('User'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.rss_feed),
+            title: Text('Feed'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Logout'),
+            onTap: () => null,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: DiscoverScreen(),
+  ));
 }
