@@ -69,8 +69,8 @@ class _NewsBody extends StatelessWidget {
                   Text(
                     article.author,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
@@ -118,23 +118,26 @@ class _NewsBody extends StatelessWidget {
           Text(
             article.body,
             style:
-                Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+            Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
           ),
           const SizedBox(height: 20),
-          GridView.builder(
-              shrinkWrap: true,
-              itemCount: 2,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.25,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // Handle register button press
+                },
+                child: Text('Register'),
               ),
-              itemBuilder: (context, index) {
-                return ImageContainer(
-                  width: MediaQuery.of(context).size.width * 0.42,
-                  imageUrl: article.imageUrl,
-                  margin: const EdgeInsets.only(right: 5.0, bottom: 5.0),
-                );
-              })
+              ElevatedButton(
+                onPressed: () {
+                  // Handle add to calendar button press
+                },
+                child: Text('Add to Calendar'),
+              ),
+            ],
+          ),
         ],
       ),
     );
