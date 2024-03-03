@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app_ui/screens/discover_screen.dart';
-import 'package:flutter_news_app_ui/screens/home_screen.dart';
+import 'package:flutter_news_app_ui/screens/screens.dart';
 
 
 class BottomNavBar extends StatelessWidget {
@@ -46,7 +45,7 @@ class BottomNavBar extends StatelessWidget {
             margin: const EdgeInsets.only(right: 50),
             child: IconButton(
               onPressed: () {
-                print('No profile screen yet');
+                Navigator.pushNamed(context, AdminScreen.routeName);;
               },
               icon: const Icon(Icons.person),
             ),

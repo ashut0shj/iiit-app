@@ -8,7 +8,7 @@ class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key? key}) : super(key: key);
 
   static const routeName = '/article';
-
+//2
   @override
   Widget build(BuildContext context) {
     final article = ModalRoute.of(context)!.settings.arguments as Article;
