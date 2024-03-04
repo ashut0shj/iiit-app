@@ -8,7 +8,6 @@ class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key? key}) : super(key: key);
 
   static const routeName = '/article';
-//2
   @override
   Widget build(BuildContext context) {
     final article = ModalRoute.of(context)!.settings.arguments as Article;
@@ -29,7 +28,7 @@ class ArticleScreen extends StatelessWidget {
                 article.imageUrl,
                 width: imageWidth,
                 height: imageHeight,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -80,12 +79,12 @@ class _NewsBody extends StatelessWidget {
                 backgroundColor: Colors.grey.shade200,
                 children: [
                   const Icon(
-                    Icons.timer,
+                    Icons.calendar_today,
                     color: Colors.grey,
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    '${DateTime.now().difference(article.createdAt).inHours}h',
+                    article.views,
                   ),
                 ],
               ),

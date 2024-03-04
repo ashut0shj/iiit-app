@@ -139,22 +139,22 @@ class __CategoryNewsState extends State<_CategoryNews> {
                           Row(
                             children: [
                               const Icon(
-                                Icons.schedule,
+                                Icons.group,
                                 size: 18,
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                '${DateTime.now().difference(filteredArticles[index].createdAt).inHours} hours ago',
+                                filteredArticles[index].author,
                                 style: const TextStyle(fontSize: 12),
                               ),
                               const SizedBox(width: 20),
                               const Icon(
-                                Icons.visibility,
+                                Icons.calendar_today,
                                 size: 18,
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                '${filteredArticles[index].views} views',
+                                '${filteredArticles[index].views}',
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ],

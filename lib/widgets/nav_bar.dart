@@ -31,6 +31,11 @@ class MyAppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.rss_feed),
+            title: const Text('Feed'),
+            onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
+          ),
+          ListTile(
             leading: const Icon(Icons.explore),
             title: const Text('Explore'),
             onTap: () {},
@@ -41,14 +46,14 @@ class MyAppDrawer extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
+            leading: const Icon(Icons.pie_chart),
+            title: const Text('My Events'),
+            onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
+          ),
+          ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('User'),
             onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
-          ),
-          ListTile(
-            leading: const Icon(Icons.rss_feed),
-            title: const Text('Feed'),
-            onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
