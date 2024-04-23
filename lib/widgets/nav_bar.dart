@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app_ui/screens/screens.dart';
+import 'package:iiitnr/screens/screens.dart';
 
 class MyAppDrawer extends StatelessWidget {
   const MyAppDrawer({Key? key}) : super(key: key);

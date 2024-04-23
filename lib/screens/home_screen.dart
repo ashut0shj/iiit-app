@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app_ui/models/article_model.dart';
-import 'package:flutter_news_app_ui/screens/screens.dart';
-import 'package:flutter_news_app_ui/widgets/custom_tag.dart';
+import 'package:iiitnr/models/article_model.dart';
+import 'package:iiitnr/screens/screens.dart';
+import 'package:iiitnr/widgets/custom_tag.dart';
 
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/image_container.dart';

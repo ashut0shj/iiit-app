@@ -1,4 +1,4 @@
-# flutter_news_app_ui
+# iiitnr
 
 A new Flutter project.
 
