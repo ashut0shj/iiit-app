@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781305780908",
+    "project_id": "iiitapp",
+    "storage_bucket": "iiitapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781305780908:android:f5ff5421021c7a5a185d09",
+        "android_client_info": {
+          "package_name": "com.example.iiitnr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3Hf5hQ5ACBhtHSiCCBVFVd-o744kKGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
