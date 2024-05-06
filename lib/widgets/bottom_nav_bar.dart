@@ -4,9 +4,9 @@ import 'package:iiitnr/screens/screens.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   final int index;
 
