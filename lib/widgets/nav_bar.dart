@@ -56,6 +56,11 @@ class MyAppDrawer extends StatelessWidget {
             onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
           ),
           ListTile(
+            leading: const Icon(Icons.event_available),
+            title: const Text('Event Forms'),
+            onTap: () {},
+          ),
+          ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
             onTap: () {},
