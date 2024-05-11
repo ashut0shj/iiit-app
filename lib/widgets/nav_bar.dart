@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/screens.dart';
 import 'package:iiitnr/testf.dart';
+import 'package:iiitnr/screens/club.dart';
 
 class MyAppDrawer extends StatelessWidget {
   const MyAppDrawer({super.key});
@@ -39,7 +40,9 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.explore),
             title: const Text('Explore'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ExploreScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.calendar_today),

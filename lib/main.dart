@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/screens.dart';
 import 'firebase_options.dart';
+import 'package:iiitnr/screens/club.dart';
+import 'package:iiitnr/screens/club_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides{
 @override
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         AdminScreen.routeName: (context) => const AdminScreen(),
         EventForm.routeName: (context) => const EventForm(), // Add EventForm to routes
+        ExploreScreen.routeName: (context) => const ExploreScreen(),
+        ClubScreen.routeName: (context) => const ClubScreen(),
       },
     );
   }
