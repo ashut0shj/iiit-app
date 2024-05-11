@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         DiscoverScreen.routeName: (context) => const DiscoverScreen(), // Use DiscoverScreen as the initial route
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         AdminScreen.routeName: (context) => const AdminScreen(),
+        EventForm.routeName: (context) => const EventForm(), // Add EventForm to routes
       },
     );
   }

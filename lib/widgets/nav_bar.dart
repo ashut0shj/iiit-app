@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/screens.dart';
+import 'package:iiitnr/testf.dart';
 
 class MyAppDrawer extends StatelessWidget {
-  const MyAppDrawer({Key? key}) : super(key: key);
+  const MyAppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class MyAppDrawer extends StatelessWidget {
         children: [
           const UserAccountsDrawerHeader(
             accountName: Text('username'),
-            accountEmail: Text('user@gmail.com'),
+            accountEmail: Text('user@iiit.com'),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Icon(
@@ -55,6 +56,13 @@ class MyAppDrawer extends StatelessWidget {
             title: const Text('User'),
             onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
           ),
+            ListTile(
+            leading: const Icon(Icons.event),
+            title: const Text('Event Form'), // Add the option for Event Form
+            onTap: () {
+              Navigator.pushNamed(context, EventForm.routeName);
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.event_available),
             title: const Text('Event Forms'),
@@ -63,7 +71,10 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
-            onTap: () {},
+            onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TestForm()));
+            },
           ),
         ],
       ),
