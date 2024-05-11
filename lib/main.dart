@@ -1,10 +1,13 @@
-import 'dart:io';
 
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app_ui/screens/club.dart';
 import 'package:flutter_news_app_ui/screens/club_screen.dart';
 
 import 'screens/screens.dart';
+import 'firebase_options.dart';
+
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -16,12 +19,18 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() {
+void main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +49,7 @@ class MyApp extends StatelessWidget {
         ClubScreen.routeName: (context) => const ClubScreen(),
         AdminScreen.routeName: (context) => const AdminScreen(),
         ExploreScreen.routeName: (context) => const ExploreScreen(),
+        EventForm.routeName: (context) => const EventForm(), // Add EventForm to routes
       },
     );
   }

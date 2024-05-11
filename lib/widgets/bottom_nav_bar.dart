@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app_ui/screens/screens.dart';
+import 'package:iiitnr/screens/screens.dart';
 
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   final int index;
 
