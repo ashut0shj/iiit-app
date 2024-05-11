@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app_ui/screens/club.dart';
 import 'package:flutter_news_app_ui/screens/screens.dart';
+import 'package:iiitnr/screens/screens.dart';
 
 class MyAppDrawer extends StatelessWidget {
   const MyAppDrawer({Key? key}) : super(key: key);
@@ -63,6 +64,13 @@ class MyAppDrawer extends StatelessWidget {
             title: const Text('User'),
             onTap: () {
               Navigator.pushNamed(context, AdminScreen.routeName);
+            },
+          ),
+            ListTile(
+            leading: const Icon(Icons.event),
+            title: const Text('Event Form'), // Add the option for Event Form
+            onTap: () {
+              Navigator.pushNamed(context, EventForm.routeName);
             },
           ),
           ListTile(
