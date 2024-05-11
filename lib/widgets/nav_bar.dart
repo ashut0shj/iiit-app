@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_app_ui/screens/club.dart';
 import 'package:flutter_news_app_ui/screens/screens.dart';
 
 class MyAppDrawer extends StatelessWidget {
@@ -16,7 +17,8 @@ class MyAppDrawer extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Icon(
-                  Icons.person_outline, // Using Icon widget instead of IconData directly
+                  Icons
+                      .person_outline, // Using Icon widget instead of IconData directly
                   size: 90,
                 ),
               ),
@@ -33,12 +35,16 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.rss_feed),
             title: const Text('Feed'),
-            onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
+            onTap: () {
+              Navigator.pushNamed(context, DiscoverScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.explore),
             title: const Text('Explore'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ExploreScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.calendar_today),
@@ -48,12 +54,16 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.pie_chart),
             title: const Text('My Events'),
-            onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
+            onTap: () {
+              Navigator.pushNamed(context, DiscoverScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('User'),
-            onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
+            onTap: () {
+              Navigator.pushNamed(context, AdminScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
