@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iiitnr/screens/forms.dart';
 
 class EventForm extends StatefulWidget {
   static const String routeName = '/event_form';
 
-  const EventForm({Key? key}) : super(key: key);
+  const EventForm({super.key});
 
   @override
   _EventFormState createState() => _EventFormState();
@@ -30,18 +28,18 @@ class _EventFormState extends State<EventForm> {
       _formKey.currentState!.save();
 
       // Save form data to Firebase
-      DatabaseReference eventRef =
-          FirebaseDatabase.instance.reference().child('events');
-      eventRef.push().set({
-        'name': _name,
-        'email': _email,
-        'position': _position,
-        'requirements': _requirements,
-        'cost': _cost,
-        'requests': _requests,
-        'selectedDate': selectedDate.toString(),
-        'selectedTime': selectedTime.toString(),
-      });
+      // DatabaseReference eventRef =
+      //     FirebaseDatabase.instance.reference().child('events');
+      // eventRef.push().set({
+      //   'name': _name,
+      //   'email': _email,
+      //   'position': _position,
+      //   'requirements': _requirements,
+      //   'cost': _cost,
+      //   'requests': _requests,
+      //   'selectedDate': selectedDate.toString(),
+      //   'selectedTime': selectedTime.toString(),
+      // });
 
       // Navigate to the next screen
       Navigator.push(

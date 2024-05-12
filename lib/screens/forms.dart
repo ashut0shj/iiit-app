@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'event_form.dart'; // Import the EventForm screen from the same directory or package
-
+import 'package:iiitnr/screens/event_form.dart';
 class FormsScreen extends StatelessWidget {
   static const String routeName = '/forms';
+
+  const FormsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
