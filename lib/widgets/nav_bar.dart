@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/screens.dart';
+import '/screens/event_form.dart';
+
 
 class MyAppDrawer extends StatelessWidget {
   const MyAppDrawer({Key? key}) : super(key: key);
@@ -55,11 +57,12 @@ class MyAppDrawer extends StatelessWidget {
             title: const Text('User'),
             onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
           ),
-            ListTile(
+    
+          ListTile(
             leading: const Icon(Icons.event),
-            title: const Text('Event Form'), // Add the option for Event Form
+            title: const Text('Forms'), // Add the option for Event Form
             onTap: () {
-              Navigator.pushNamed(context, EventForm.routeName);
+              Navigator.pushNamed(context, FormsScreen.routeName);
             },
           ),
           ListTile(

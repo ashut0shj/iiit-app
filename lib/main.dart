@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/screens.dart';
 import 'firebase_options.dart';
-
+import 'screens/event_form.dart';
+import 'screens/forms.dart';
 
 
 class MyHttpOverrides extends HttpOverrides{
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
         DiscoverScreen.routeName: (context) => const DiscoverScreen(), // Use DiscoverScreen as the initial route
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         AdminScreen.routeName: (context) => const AdminScreen(),
-        EventForm.routeName: (context) => const EventForm(), // Add EventForm to routes
+        FormsScreen.routeName: (context) =>  FormsScreen(),
+        EventForm.routeName: (context) => const EventForm() // Add EventForm to routes
       },
     );
   }

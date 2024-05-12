@@ -35,7 +35,7 @@ class Article extends Equatable {
       author: 'MUN',
       authorImageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/mun_logo.2a74544b.png',
       category: 'Cultural',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/unnamed%20(1).png?raw=true',
+      imageUrl: 'assets/us.jpg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 5)),
     ),

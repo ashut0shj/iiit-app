@@ -1,16 +1,17 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:iiitnr/screens/forms.dart';
 
 class EventForm extends StatefulWidget {
-  static const String routeName = '/event_form'; // Define route name here
-  const EventForm({super.key});
+  static const String routeName = '/event_form';
+
+  const EventForm({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _EventFormState createState() => _EventFormState();
 }
+
 
 class _EventFormState extends State<EventForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -18,26 +19,46 @@ class _EventFormState extends State<EventForm> {
   String _email = '';
   String _position = '';
   String _requirements = '';
-  double _cost = 0.0;
+  double? _cost;
   String _requests = '';
-
-
 
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  void _submitForm() {
+  void _navigateToEventDetails() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print('Name: $_name');
-      print('Email: $_email');
-      print('Position in Club: $_position');
-      print('Requirements: $_requirements');
-      print('Cost: $_cost');
-      print('Requests: $_requests');
-      print('Selected Date: ${selectedDate.toString().contains(' ') ? selectedDate.toString().split(' ')[0] : selectedDate.toString()}');
-      print('Selected Time: ${selectedTime.toString()}');
-      // You can add Firebase integration here to save the form data
+
+      // Save form data to Firebase
+      DatabaseReference eventRef =
+          FirebaseDatabase.instance.reference().child('events');
+      eventRef.push().set({
+        'name': _name,
+        'email': _email,
+        'position': _position,
+        'requirements': _requirements,
+        'cost': _cost,
+        'requests': _requests,
+        'selectedDate': selectedDate.toString(),
+        'selectedTime': selectedTime.toString(),
+      });
+
+      // Navigate to the next screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EventDetailsForm(
+            name: _name,
+            email: _email,
+            position: _position,
+            selectedDate: selectedDate,
+            selectedTime: selectedTime,
+            requirements: _requirements,
+            cost: _cost,
+            requests: _requests,
+          ),
+        ),
+      );
     }
   }
 
@@ -102,7 +123,6 @@ class _EventFormState extends State<EventForm> {
                 if (value!.isEmpty) {
                   return 'Please enter your email.';
                 }
-                // You can add more complex email validation logic here
                 return null;
               },
               onSaved: (value) {
@@ -126,49 +146,39 @@ class _EventFormState extends State<EventForm> {
             ),
             TextFormField(
               decoration: const InputDecoration(
-                labelText: 'Requirements for the Event',
+                labelText:
+                    'Requirements for the Event (Optional , Fill NA if not required)',
                 icon: Icon(Icons.list),
               ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter the requirements for the event.';
-                }
-                return null;
-              },
               onSaved: (value) {
                 _requirements = value!;
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                labelText: 'Cost for the Requirements',
+                labelText:
+                    'Cost for the Requirements (Optional , Fill NA if not required)',
                 icon: Icon(Icons.attach_money),
               ),
               keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter the cost for the requirements.';
-                }
-                return null;
-              },
               onSaved: (value) {
-                try {
-                  _cost = double.parse(value!);
-                } catch (e) {
-                  // Handle the error, for example, by setting a default value
-                  _cost = 0.0;
+                if (value != null && value.isNotEmpty) {
+                  try {
+                    _cost = double.parse(value);
+                  } catch (e) {
+                    _cost = null; // Set null if parsing fails
+                  }
+                } else {
+                  _cost = null;
                 }
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                labelText: 'Any Additional Requests',
+                labelText:
+                    'Any Additional Requests (Optional , Fill NA if not required)',
                 icon: Icon(Icons.note),
               ),
-              validator: (value) {
-                // No validation required for requests
-                return null;
-              },
               onSaved: (value) {
                 _requests = value!;
               },
@@ -217,7 +227,7 @@ class _EventFormState extends State<EventForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      backgroundColor: Colors.greenAccent, // Set background color directly
+                      backgroundColor: Colors.greenAccent,
                     ),
                     child: const Text(
                       'Select date',
@@ -242,7 +252,7 @@ class _EventFormState extends State<EventForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      backgroundColor: Colors.greenAccent, // Set background color directly
+                      backgroundColor: Colors.greenAccent,
                     ),
                     child: const Text(
                       'Select time',
@@ -257,7 +267,7 @@ class _EventFormState extends State<EventForm> {
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: _submitForm,
+              onPressed: _navigateToEventDetails,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                     vertical: 15.0, horizontal: 30.0),
@@ -265,7 +275,133 @@ class _EventFormState extends State<EventForm> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 textStyle: const TextStyle(fontSize: 16.0),
-                backgroundColor: Colors.greenAccent, // Set background color directly
+                backgroundColor: Colors.blueAccent,
+              ),
+              child: const Text('Next'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EventDetailsForm extends StatefulWidget {
+  final String name;
+  final String email;
+  final String position;
+  final DateTime selectedDate;
+  final TimeOfDay selectedTime;
+  final String requirements;
+  final double? cost;
+  final String requests;
+
+  const EventDetailsForm({
+    required this.name,
+    required this.email,
+    required this.position,
+    required this.selectedDate,
+    required this.selectedTime,
+    required this.requirements,
+    required this.cost,
+    required this.requests,
+  });
+
+  @override
+  _EventDetailsFormState createState() => _EventDetailsFormState();
+  
+  void onSave(String eventName, String eventDescription, DateTime eventDate) {}
+}
+
+class _EventDetailsFormState extends State<EventDetailsForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _eventName = '';
+  String _eventDescription = '';
+  DateTime _eventDate = DateTime.now();
+  // Add more variables if needed
+
+  void _saveEventDataToFirebase() {
+    DatabaseReference eventDetailsRef =
+        FirebaseDatabase.instance.reference().child('event_details');
+    eventDetailsRef.push().set({
+      'name': widget.name,
+      'email': widget.email,
+      'position': widget.position,
+      'selectedDate': widget.selectedDate.toString(),
+      'selectedTime': widget.selectedTime.toString(),
+      'requirements': widget.requirements,
+      'cost': widget.cost,
+      'requests': widget.requests,
+      'eventName': _eventName,
+      'eventDescription': _eventDescription,
+      // Add more fields as needed
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Event Details Form'),
+      ),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: <Widget>[
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Event Name',
+                icon: Icon(Icons.event),
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter the event name.';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _eventName = value!;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Event Description',
+                icon: Icon(Icons.description),
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter the event description.';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _eventDescription = value!;
+              },
+            ),
+            // Add a date picker for event date
+            // Add an option for the user to upload the poster of the event
+            // Add any other fields as needed
+            ElevatedButton(
+              onPressed: () {
+                // Validate and save form data
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  // Save data to Firebase or perform any other actions
+                  // You can use _eventName, _eventDescription, _eventDate, etc.
+                  widget.onSave(_eventName, _eventDescription, _eventDate); // Save to Firebase
+                  _saveEventDataToFirebase(); // Save event details to Firebase
+                  // Then navigate to the next screen or perform any other actions
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 30.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                textStyle: const TextStyle(fontSize: 16.0),
+                backgroundColor: Colors.greenAccent,
               ),
               child: const Text('Submit'),
             ),
