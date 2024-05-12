@@ -41,9 +41,13 @@ class MyApp extends StatelessWidget {
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         AdminScreen.routeName: (context) => const AdminScreen(),
         FormsScreen.routeName: (context) =>  FormsScreen(),
-        EventForm.routeName: (context) => const EventForm(), // Add EventForm to routes
+        EventForm.routeName: (context) => const EventForm(),
+        KeyRequisitionForm.routeName: (context) => const KeyRequisitionForm(),// Add EventForm to routes
         ExploreScreen.routeName: (context) => const ExploreScreen(),
         ClubScreen.routeName: (context) => const ClubScreen(),
+        ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
+        GrievanceForm.routeName: (context) => const  GrievanceForm(),
+        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm()
 
       },
     );

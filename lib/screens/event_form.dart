@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iiitnr/screens/forms.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class EventForm extends StatefulWidget {
   static const String routeName = '/event_form';
@@ -11,7 +13,6 @@ class EventForm extends StatefulWidget {
   @override
   _EventFormState createState() => _EventFormState();
 }
-
 
 class _EventFormState extends State<EventForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,12 +25,12 @@ class _EventFormState extends State<EventForm> {
 
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  late File? _image = null; // Initialize _image to null
 
   void _navigateToEventDetails() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Save form data to Firebase
       DatabaseReference eventRef =
           FirebaseDatabase.instance.reference().child('events');
       eventRef.push().set({
@@ -41,9 +42,9 @@ class _EventFormState extends State<EventForm> {
         'requests': _requests,
         'selectedDate': selectedDate.toString(),
         'selectedTime': selectedTime.toString(),
+        'imageUrl': '', // Placeholder for imageUrl
       });
 
-      // Navigate to the next screen
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -56,6 +57,7 @@ class _EventFormState extends State<EventForm> {
             requirements: _requirements,
             cost: _cost,
             requests: _requests,
+            image: _image, // Pass _image to EventDetailsForm
           ),
         ),
       );
@@ -295,8 +297,9 @@ class EventDetailsForm extends StatefulWidget {
   final String requirements;
   final double? cost;
   final String requests;
+  File? image;
 
-  const EventDetailsForm({
+  EventDetailsForm({
     required this.name,
     required this.email,
     required this.position,
@@ -305,25 +308,24 @@ class EventDetailsForm extends StatefulWidget {
     required this.requirements,
     required this.cost,
     required this.requests,
+    required this.image,
   });
 
   @override
   _EventDetailsFormState createState() => _EventDetailsFormState();
-  
-  void onSave(String eventName, String eventDescription, DateTime eventDate) {}
 }
 
 class _EventDetailsFormState extends State<EventDetailsForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _eventName = '';
   String _eventDescription = '';
-  DateTime _eventDate = DateTime.now();
-  // Add more variables if needed
+  String imageUrl = ''; // Initialize imageUrl
 
-  void _saveEventDataToFirebase() {
+  void _saveEventDataToFirebase() async {
     DatabaseReference eventDetailsRef =
         FirebaseDatabase.instance.reference().child('event_details');
-    eventDetailsRef.push().set({
+    DatabaseReference newEventRef = eventDetailsRef.push();
+    await newEventRef.set({
       'name': widget.name,
       'email': widget.email,
       'position': widget.position,
@@ -334,8 +336,31 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
       'requests': widget.requests,
       'eventName': _eventName,
       'eventDescription': _eventDescription,
-      // Add more fields as needed
+      'imageUrl': imageUrl, // Use imageUrl
     });
+  }
+
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        widget.image = File(pickedFile.path);
+      });
+
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('event_images');
+      String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+      try {
+        await referenceImageToUpload.putFile(File(pickedFile.path));
+        imageUrl = await referenceImageToUpload.getDownloadURL();
+      } catch (error) {
+        print('Error uploading image: $error');
+      }
+    }
   }
 
   @override
@@ -379,19 +404,24 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
                 _eventDescription = value!;
               },
             ),
-            // Add a date picker for event date
-            // Add an option for the user to upload the poster of the event
-            // Add any other fields as needed
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _getImage,
+              child: Text(widget.image == null ? 'Select Image' : 'Change Image'),
+            ),
+            SizedBox(height: 20),
+            if (widget.image != null)
+              Image.network(
+                imageUrl, // Use imageUrl instead of _image.path
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ElevatedButton(
               onPressed: () {
-                // Validate and save form data
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  // Save data to Firebase or perform any other actions
-                  // You can use _eventName, _eventDescription, _eventDate, etc.
-                  widget.onSave(_eventName, _eventDescription, _eventDate); // Save to Firebase
-                  _saveEventDataToFirebase(); // Save event details to Firebase
-                  // Then navigate to the next screen or perform any other actions
+                  _saveEventDataToFirebase();
                 }
               },
               style: ElevatedButton.styleFrom(
