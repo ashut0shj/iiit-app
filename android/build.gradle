@@ -5,7 +5,7 @@
     // }
 
 buildscript {
-    ext.kotlin_version = '1.9.23' // Add
+    ext.kotlin_version = '1.9.10' // Add
     repositories {
         google()
         mavenCentral()
