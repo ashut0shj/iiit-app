@@ -35,7 +35,7 @@ class Article extends Equatable {
       author: 'MUN',
       authorImageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/mun_logo.2a74544b.png',
       category: 'Cultural',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/unnamed%20(1).png?raw=true',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/chai23_1.e3326d8b.jpg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 5)),
     ),
@@ -45,9 +45,9 @@ class Article extends Equatable {
       subtitle: 'Aliquam laoreet ante non diam suscipit accumsan. Sed vel consequat leo, non suscipit odio. Aliquam turpis',
       body: 'Hey all, To help you get started with your Competitive Programming journey, TSoC is organizing a Coding Competition on 7th November 2023 from 6:30 PM - 8:30 PM. The competition is hosted on Codeforces. The contest would be held in offline mode at CP Lab. Make sure to carry your laptops and be prepared. Follow these instructions: 1) Make an account on: (Skip if already have) 2) Add IIIT Naya Raipur to your organization, and your account should be visible on this page: 3) Try solving this problem: Youll find all the necessary details in the links above. The contest link will be shared with everyone through the mail. Happy Coding!',
       author: 'TSoC',
-      authorImageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/tsoc_logo.jpg?raw=true',
+      authorImageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/tsoc_logo.bd701a51.jpg',
       category: 'Technical',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/CODENUBS%20(Billboard%20(Square)).png?raw=true',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/tsoc_logo.bd701a51.jpg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 6)),
     ),
@@ -59,7 +59,7 @@ class Article extends Equatable {
       author: 'Inquizitive',
       authorImageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/inquizitive_logo.75457948.jpg?raw=true',
       category: 'Technical',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/pasted%20image%200.png?raw=true',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/inquizitive_logo.75457948.jpg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 8)),
     ),
@@ -71,7 +71,7 @@ class Article extends Equatable {
       author: 'AIML Club',
       authorImageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/aiml_logo.a4c23a16.jpg?raw=true',
       category: 'Technical',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/image.png?raw=true',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/canva1.b9904672.jpeg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 19)),
     ),
@@ -83,7 +83,7 @@ class Article extends Equatable {
       author: 'C2C Club',
       authorImageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/c2c_logo.63bd7aa9.png?raw=true',
       category: 'Cultural',
-      imageUrl: 'https://github.com/ashut0shj/iiit-app/blob/main/assets/image/cgamer.png?raw=true',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/tech24_2.484ce8c4.jpg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 20)),
     ),
@@ -95,7 +95,7 @@ class Article extends Equatable {
       author: 'Anna G. Wright',
       authorImageUrl: 'https://images.unsplash.com/photo-1658786403875-ef4086b78196?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80',
       category: 'Politics',
-      imageUrl: 'https://images.unsplash.com/photo-1656106534627-0fef76c8b042?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
+      imageUrl: 'https://sac.iiitnr.ac.in/_next/static/media/canva1.b9904672.jpeg',
       views: _randomDateInRange(DateTime(2023, 8, 1), DateTime(2023, 8, 31)).toString().substring(0,10), // Random date in string format
       createdAt: DateTime.now().subtract(const Duration(hours: 5)),
     ),
