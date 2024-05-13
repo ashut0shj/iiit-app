@@ -8,7 +8,6 @@ import 'package:iiitnr/screens/resources_requisition.dart';
 import 'package:iiitnr/screens/grievance_form.dart';
 import 'package:iiitnr/screens/letter.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),
       routes: {
-        DiscoverScreen.routeName: (context) => const DiscoverScreen(),
+    
         // ArticleScreen.routeName: (context) => const ArticleScreen(),
         // AdminScreen.routeName: (context) => const AdminScreen(),
         FormsScreen.routeName: (context) => const FormsScreen(), // Remove const keyword
@@ -34,7 +33,8 @@ class MyApp extends StatelessWidget {
         // ClubScreen.routeName: (context) => const ClubScreen(),
         ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
         GrievanceForm.routeName: (context) => const  GrievanceForm(),
-        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm()
+        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm(),
+        EventResponsesScreen.routeName: (context) =>  EventResponsesScreen(),
         // ExploreScreen.routeName: (context) => const ExploreScreen(),
         // ClubScreen.routeName: (context) => const ClubScreen(),
       },
@@ -89,7 +89,7 @@ class MainScreen extends StatelessWidget {
               title: const Text('Feed'),
               onTap: () {
                 // Navigate to FeedScreen
-                Navigator.pushNamed(context, DiscoverScreen.routeName);
+                Navigator.pushNamed(context, EventResponsesScreen.routeName);
               },
             ),
             // Add more list items for other screens
@@ -119,7 +119,7 @@ class MainScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   // Navigate to DiscoverScreen
-                  Navigator.pushNamed(context, DiscoverScreen.routeName);
+                  Navigator.pushNamed(context, EventResponsesScreen.routeName);
                 },
                 child: const Center(
                   child: Text('Feed'),

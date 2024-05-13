@@ -1,39 +1,117 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 
-class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({Key? key}) : super(key: key);
-
-  static const routeName = '/discover';
-
-  @override
-  _DiscoverScreenState createState() => _DiscoverScreenState();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
-  late List<EventDetails> eventDetails;
+class EventResponse {
+  final String name;
+  final String email;
+  final String position;
+  final String selectedDate;
+  final String selectedTime;
+  final String requirements;
+  final double? cost;
+  final String requests;
+  final String eventName;
+  final String eventDescription;
+  bool approved;
+  String comments;
+
+  EventResponse({
+    required this.name,
+    required this.email,
+    required this.position,
+    required this.selectedDate,
+    required this.selectedTime,
+    required this.requirements,
+    required this.cost,
+    required this.requests,
+    required this.eventName,
+    required this.eventDescription,
+    this.approved = false,
+    this.comments = '',
+  });
+
+  factory EventResponse.fromMap(Map<dynamic, dynamic> map) {
+    return EventResponse(
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+      position: map['position'] ?? '',
+      selectedDate: map['selectedDate'] ?? '',
+      selectedTime: map['selectedTime'] ?? '',
+      requirements: map['requirements'] ?? '',
+      cost: map['cost'],
+      requests: map['requests'] ?? '',
+      eventName: map['eventName'] ?? '',
+      eventDescription: map['eventDescription'] ?? '',
+      approved: map['approved'] ?? false,
+      comments: map['comments'] ?? '',
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Event Form',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: EventResponsesScreen(),
+    );
+  }
+}
+
+class EventResponsesScreen extends StatefulWidget {
+  static const String routeName = '/admin_form';
+  @override
+  _EventResponsesScreenState createState() => _EventResponsesScreenState();
+}
+
+class _EventResponsesScreenState extends State<EventResponsesScreen> {
+  final List<EventResponse> _responses = [];
 
   @override
   void initState() {
     super.initState();
-    fetchEventDetails();
+    _fetchEventResponses();
   }
 
-  void fetchEventDetails() {
-    DatabaseReference eventDetailsRef = FirebaseDatabase.instance.reference().child('event_details');
-    eventDetailsRef.once().then((DataSnapshot snapshot) {
-      List<EventDetails> fetchedEventDetails = [];
-      Object? values = snapshot.value;
-      (values as Map<dynamic, dynamic>).forEach((key, value) {
-        fetchedEventDetails.add(EventDetails.fromJson(value)); // Assuming you have a fromJson method in your EventDetails model
-      });
+  void _fetchEventResponses() {
+    DatabaseReference eventRef =
+        FirebaseDatabase.instance.reference().child('events');
+    eventRef.onValue.listen((event) {
+      _responses.clear();
+      if (event.snapshot.value != null) {
+        Object? values = event.snapshot.value;
+        (values as Map).forEach((key, value) {
+          EventResponse response = EventResponse.fromMap(value);
+          _responses.add(response);
+        });
+        setState(() {});
+      }
+    });
+  }
+
+  void _updateEventResponse(EventResponse response, bool approve) {
+    // Update the approval status and comments for the event response
+    response.approved = approve;
+    // Save the changes to the Firebase database
+    DatabaseReference eventRef =
+        FirebaseDatabase.instance.reference().child('events');
+    eventRef.child(response.name).update({
+      'approved': response.approved,
+      'comments': response.comments,
+    }).then((_) {
       setState(() {
-        eventDetails = fetchedEventDetails;
+        // Refresh the UI
       });
-    } as FutureOr Function(DatabaseEvent value)).catchError((error) {
-      print('Failed to fetch event details: $error');
     });
   }
 
@@ -41,40 +119,57 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discover'),
+        title: Text('Event Responses'),
       ),
       body: ListView.builder(
-        itemCount: eventDetails.length,
+        itemCount: _responses.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(eventDetails[index].eventName),
-            subtitle: Text('Date: ${eventDetails[index].selectedDate}, Time: ${eventDetails[index].selectedTime}'),
-            onTap: () {
-              // Handle tap on event details
-            },
+          final response = _responses[index];
+          return Card(
+            margin: EdgeInsets.all(10),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Name: ${response.name}'),
+                  Text('Email: ${response.email}'),
+                  Text('Position: ${response.position}'),
+                  Text('Selected Date: ${response.selectedDate}'),
+                  Text('Selected Time: ${response.selectedTime}'),
+                  Text('Requirements: ${response.requirements}'),
+                  Text('Cost: ${response.cost ?? 'NA'}'),
+                  Text('Requests: ${response.requests}'),
+                  Text('Event Name: ${response.eventName}'),
+                  Text('Event Description: ${response.eventDescription}'),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          _updateEventResponse(response, true);
+                        },
+                        child: Text('Approve'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _updateEventResponse(response, false);
+                        },
+                        child: Text('Reject'),
+                      ),
+                    ],
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Comments'),
+                    onChanged: (value) {
+                      response.comments = value;
+                    },
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
-    );
-  }
-}
-
-class EventDetails {
-  final String eventName;
-  final String selectedDate;
-  final String selectedTime;
-
-  EventDetails({
-    required this.eventName,
-    required this.selectedDate,
-    required this.selectedTime,
-  });
-
-  factory EventDetails.fromJson(Map<dynamic, dynamic> json) {
-    return EventDetails(
-      eventName: json['eventName'],
-      selectedDate: json['selectedDate'],
-      selectedTime: json['selectedTime'],
     );
   }
 }
