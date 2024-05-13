@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
         ClubScreen.routeName: (context) => const ClubScreen(),
         ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
         GrievanceForm.routeName: (context) => const  GrievanceForm(),
-        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm()
+        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm(),
+        
 
       },
     );

@@ -48,11 +48,6 @@ class MyAppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.calendar_today),
-            title: const Text('Calendar'),
-            onTap: () {},
-          ),
-          ListTile(
             leading: const Icon(Icons.pie_chart),
             title: const Text('My Events'),
             onTap: () {Navigator.pushNamed(context, DiscoverScreen.routeName);},
