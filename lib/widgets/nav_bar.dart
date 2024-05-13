@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iiitnr/screens/screens.dart';
 // import 'package:iiitnr/testf.dart';
 import 'package:iiitnr/screens/club.dart';
 import 'package:iiitnr/screens/forms.dart';
-import 'package:iiitnr/screens/discover.dart';
+import 'package:iiitnr/screens/discover_screen.dart';
 
 
 class MyAppDrawer extends StatelessWidget {

@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/forms.dart';
 import 'package:iiitnr/screens/event_form.dart'; 
 import 'package:iiitnr/screens/discover.dart';
+import 'package:iiitnr/screens/grievanceresponses.dart';
 import 'package:iiitnr/screens/key_form.dart';
 import 'package:iiitnr/screens/resources_requisition.dart';
 import 'package:iiitnr/screens/grievance_form.dart';
 import 'package:iiitnr/screens/letter.dart';
-
+import 'package:iiitnr/screens/discover_screen.dart';
+import 'package:iiitnr/screens/club.dart';
+import 'package:iiitnr/screens/adminform.dart';
+import 'package:iiitnr/screens/event_responses.dart';
+import 'package:iiitnr/screens/key_response.dart';
+import 'package:iiitnr/screens/letterrespomse.dart';
+ 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -29,14 +36,17 @@ class MyApp extends StatelessWidget {
         FormsScreen.routeName: (context) => const FormsScreen(), // Remove const keyword
         EventForm.routeName: (context) => const EventForm(),
         KeyRequisitionForm.routeName: (context) => const KeyRequisitionForm(),// Add EventForm to routes
-        // ExploreScreen.routeName: (context) => const ExploreScreen(),
+        DiscoverScreen.routeName: (context) => const DiscoverScreen(),
         // ClubScreen.routeName: (context) => const ClubScreen(),
         ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
         GrievanceForm.routeName: (context) => const  GrievanceForm(),
         LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm(),
-        EventResponsesScreen.routeName: (context) =>  EventResponsesScreen(),
-        // ExploreScreen.routeName: (context) => const ExploreScreen(),
-        // ClubScreen.routeName: (context) => const ClubScreen(),
+        EventResponsesScreen.routeName: (context) => const EventResponsesScreen(),
+        ExploreScreen.routeName: (context) => const ExploreScreen(),
+        FormsResponsesScreen.routeName: (context) => const FormsResponsesScreen(),
+        GrievanceResponsesScreen.routeName: (context) => const GrievanceResponsesScreen(),  
+        LetterOfRecommendationResponsesScreen.routeName: (context) => const LetterOfRecommendationResponsesScreen(),
+        KeyRequisitionResponsesScreen.routeName: (context) => const KeyRequisitionResponsesScreen(),
       },
     );
   }
@@ -89,10 +99,23 @@ class MainScreen extends StatelessWidget {
               title: const Text('Feed'),
               onTap: () {
                 // Navigate to FeedScreen
-                Navigator.pushNamed(context, EventResponsesScreen.routeName);
+                Navigator.pushNamed(context, DiscoverScreen.routeName);
               },
             ),
-            // Add more list items for other screens
+            ListTile(
+              title: const Text('Clubs'),
+              onTap: () {
+                // Navigate to FeedScreen
+                Navigator.pushNamed(context, ExploreScreen.routeName);
+              },
+            ),
+            ListTile(
+              title: const Text('Calender'),
+              onTap: () {
+                // Navigate to FeedScreen
+                Navigator.pushNamed(context, FormsResponsesScreen.routeName);
+              },
+            ),            // Add more list items for other screens
           ],
         ),
       ),
@@ -118,8 +141,8 @@ class MainScreen extends StatelessWidget {
             child: Card(
               child: InkWell(
                 onTap: () {
-                  // Navigate to DiscoverScreen
-                  Navigator.pushNamed(context, EventResponsesScreen.routeName);
+                  Navigator.pushNamed(context, DiscoverScreen.routeName);
+                  
                 },
                 child: const Center(
                   child: Text('Feed'),
@@ -127,6 +150,34 @@ class MainScreen extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, DiscoverScreen.routeName);
+                  
+                },
+                child: const Center(
+                  child: Text('Clubs'),
+                ),
+              ),
+            ),
+          ),Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, FormsResponsesScreen.routeName);
+                  
+                },
+                child: const Center(
+                  child: Text('Calender'),
+                ),
+              ),
+            ),
+          ),
+          
           // Add more cards for other screens
         ],
       ),

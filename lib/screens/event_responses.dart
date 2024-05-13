@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class EventResponse {
@@ -46,6 +44,8 @@ class EventResponse {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,14 +53,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: EventResponsesScreen(),
+      home: const EventResponsesScreen(),
     );
   }
 }
 
 class EventResponsesScreen extends StatefulWidget {
-  static const String routeName = '/admin_form';
-  const EventResponsesScreen({Key? key}) : super(key: key);
+  static const String routeName = '/event_form_res';
+
+  const EventResponsesScreen({super.key});
   @override
   _EventResponsesScreenState createState() => _EventResponsesScreenState();
 }
@@ -96,7 +97,7 @@ class _EventResponsesScreenState extends State<EventResponsesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Responses'),
+        title: const Text('Event Responses'),
       ),
       body: ListView.builder(
         itemCount: _responses.length,

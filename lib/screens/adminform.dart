@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'event_responses.dart'; 
-import 'key_requisition_responses.dart';
-import 'resources_requisition.dart';
-import 'grievance_form.dart';
-import 'letter.dart'; 
+import 'key_response.dart';
 
-class FormsScreen extends StatelessWidget {
-  static const String routeName = '/forms';
+import 'grievanceresponses.dart';
+import 'letterrespomse.dart'; 
 
-  const FormsScreen({Key? key}) : super(key: key);
+class FormsResponsesScreen extends StatelessWidget {
+  static const String routeName = '/forms_responses';
+
+  const FormsResponsesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class FormsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, EventResponse.routeName);
+              Navigator.pushNamed(context, EventResponsesScreen.routeName);
             },
             child: const Text('Event Proposal Form Responses'),
           ),
@@ -42,7 +42,7 @@ class FormsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, GrievanceFormResponses.routeName);
+              Navigator.pushNamed(context, GrievanceResponsesScreen.routeName);
             },
             child: const Text('Grievance Form Responses'),
           ),
@@ -51,7 +51,7 @@ class FormsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, LetterOfRecommendationFormResponses.routeName);
+              Navigator.pushNamed(context, LetterOfRecommendationResponsesScreen.routeName);
             },
             child: const Text('Letter of Recommendation Form Responses'),
           ),
@@ -60,7 +60,7 @@ class FormsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, ResourcesRequisitionFormResponses.routeName);
+              // Navigator.pushNamed(context, ResourcesRequisitionFormResponses.routeName);
             },
             child: const Text('Resources Requisition Form Responses'),
           ),

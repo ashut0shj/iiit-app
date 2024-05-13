@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'dart:math';
+
 
 class Clubs extends Equatable {
   final String id;

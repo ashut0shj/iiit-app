@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 class GrievanceResponsesScreen extends StatefulWidget {
   static const String routeName = '/grievance_responses';
 
-  const GrievanceResponsesScreen({Key? key}) : super(key: key);
+  const GrievanceResponsesScreen({super.key});
 
   @override
   _GrievanceResponsesScreenState createState() =>
@@ -71,8 +71,7 @@ class _GrievanceResponsesScreenState extends State<GrievanceResponsesScreen> {
 class GrievanceResponseDetailsScreen extends StatelessWidget {
   final GrievanceResponse response;
 
-  const GrievanceResponseDetailsScreen({Key? key, required this.response})
-      : super(key: key);
+  const GrievanceResponseDetailsScreen({super.key, required this.response});
 
   @override
   Widget build(BuildContext context) {
