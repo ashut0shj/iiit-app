@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:iiitnr/screens/event_form.dart';
+import 'event_form.dart'; 
+import 'key_form.dart';
+import 'resources_requisition.dart';
+import 'grievance_form.dart';
+import 'letter.dart';// Import the EventForm screen from the same directory or package
+// Import other form screens if needed
+
 class FormsScreen extends StatelessWidget {
   static const String routeName = '/forms';
 
@@ -31,7 +37,44 @@ class FormsScreen extends StatelessWidget {
           const SizedBox(
             height: 20.0,
           ),
-          // Add buttons for other forms if needed
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, KeyRequisitionForm.routeName);
+              // Navigate to Key Requisition Form screen
+            },
+            child: const Text('Key Requisition Form'),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+             Navigator.pushNamed(context, GrievanceForm.routeName);
+              // Navigate to Grievance Form screen
+            },
+            child: const Text('Grievance Form'),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, LetterOfRecommendationForm.routeName);
+              // Navigate to Letter of Recommendation Form screen
+            },
+            child: const Text('Letter of Recommendation Form'),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ResourcesRequisitionForm.routeName);
+              // Navigate to Resources Requisition Form screen
+            },
+            child: const Text('Resources Requisition Form'),
+          ),
+          // Add more buttons for other forms if needed
         ],
       ),
     );

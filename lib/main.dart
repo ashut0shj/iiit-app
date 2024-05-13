@@ -1,7 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/forms.dart';
-import 'package:iiitnr/screens/event_form.dart'; // Add this import statement
+import 'package:iiitnr/screens/event_form.dart'; 
+import 'package:iiitnr/screens/discover.dart';
+import 'package:iiitnr/screens/key_form.dart';
+import 'package:iiitnr/screens/resources_requisition.dart';
+import 'package:iiitnr/screens/grievance_form.dart';
+import 'package:iiitnr/screens/letter.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -17,11 +24,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),
       routes: {
-        // DiscoverScreen.routeName: (context) => const DiscoverScreen(),
+        DiscoverScreen.routeName: (context) => const DiscoverScreen(),
         // ArticleScreen.routeName: (context) => const ArticleScreen(),
         // AdminScreen.routeName: (context) => const AdminScreen(),
         FormsScreen.routeName: (context) => const FormsScreen(), // Remove const keyword
         EventForm.routeName: (context) => const EventForm(),
+        KeyRequisitionForm.routeName: (context) => const KeyRequisitionForm(),// Add EventForm to routes
+        // ExploreScreen.routeName: (context) => const ExploreScreen(),
+        // ClubScreen.routeName: (context) => const ClubScreen(),
+        ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
+        GrievanceForm.routeName: (context) => const  GrievanceForm(),
+        LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm()
         // ExploreScreen.routeName: (context) => const ExploreScreen(),
         // ClubScreen.routeName: (context) => const ClubScreen(),
       },
@@ -76,7 +89,7 @@ class MainScreen extends StatelessWidget {
               title: const Text('Feed'),
               onTap: () {
                 // Navigate to FeedScreen
-                // Navigator.pushNamed(context, DiscoverScreen.routeName);
+                Navigator.pushNamed(context, DiscoverScreen.routeName);
               },
             ),
             // Add more list items for other screens
@@ -106,7 +119,7 @@ class MainScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   // Navigate to DiscoverScreen
-                  // Navigator.pushNamed(context, DiscoverScreen.routeName);
+                  Navigator.pushNamed(context, DiscoverScreen.routeName);
                 },
                 child: const Center(
                   child: Text('Feed'),
