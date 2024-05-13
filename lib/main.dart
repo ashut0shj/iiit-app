@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:iiitnr/screens/article_screen.dart';
 import 'package:iiitnr/screens/forms.dart';
 import 'package:iiitnr/screens/event_form.dart'; 
-import 'package:iiitnr/screens/discover.dart';
+// import 'package:iiitnr/screens/discover.dart';
 import 'package:iiitnr/screens/grievanceresponses.dart';
 import 'package:iiitnr/screens/key_form.dart';
 import 'package:iiitnr/screens/resources_requisition.dart';
@@ -14,7 +15,7 @@ import 'package:iiitnr/screens/adminform.dart';
 import 'package:iiitnr/screens/event_responses.dart';
 import 'package:iiitnr/screens/key_response.dart';
 import 'package:iiitnr/screens/letterrespomse.dart';
- 
+import 'package:iiitnr/widgets/nav_bar.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -41,12 +42,13 @@ class MyApp extends StatelessWidget {
         ResourcesRequisitionForm.routeName: (context) => const ResourcesRequisitionForm(),
         GrievanceForm.routeName: (context) => const  GrievanceForm(),
         LetterOfRecommendationForm.routeName:(context) => const LetterOfRecommendationForm(),
-        EventResponsesScreen.routeName: (context) => const EventResponsesScreen(),
+        EventResponsesScreen.routeName: (context) => EventResponsesScreen(),
         ExploreScreen.routeName: (context) => const ExploreScreen(),
         FormsResponsesScreen.routeName: (context) => const FormsResponsesScreen(),
         GrievanceResponsesScreen.routeName: (context) => const GrievanceResponsesScreen(),  
         LetterOfRecommendationResponsesScreen.routeName: (context) => const LetterOfRecommendationResponsesScreen(),
         KeyRequisitionResponsesScreen.routeName: (context) => const KeyRequisitionResponsesScreen(),
+        ArticleScreen.routeName: (context) => const ArticleScreen(),
       },
     );
   }
@@ -72,53 +74,7 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('Forms'),
-              onTap: () {
-                // Navigate to FormsScreen
-                Navigator.pushNamed(context, FormsScreen.routeName);
-              },
-            ),
-            ListTile(
-              title: const Text('Feed'),
-              onTap: () {
-                // Navigate to FeedScreen
-                Navigator.pushNamed(context, DiscoverScreen.routeName);
-              },
-            ),
-            ListTile(
-              title: const Text('Clubs'),
-              onTap: () {
-                // Navigate to FeedScreen
-                Navigator.pushNamed(context, ExploreScreen.routeName);
-              },
-            ),
-            ListTile(
-              title: const Text('Calender'),
-              onTap: () {
-                // Navigate to FeedScreen
-                Navigator.pushNamed(context, FormsResponsesScreen.routeName);
-              },
-            ),            // Add more list items for other screens
-          ],
-        ),
-      ),
+      drawer: const MyAppDrawer(),
       body: GridView.count(
         crossAxisCount: 2,
         children: [
@@ -155,7 +111,7 @@ class MainScreen extends StatelessWidget {
             child: Card(
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, DiscoverScreen.routeName);
+                  Navigator.pushNamed(context, ExploreScreen.routeName);
                   
                 },
                 child: const Center(

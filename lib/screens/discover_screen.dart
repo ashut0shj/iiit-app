@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:iiitnr/screens/article_screen.dart';
 import 'package:iiitnr/widgets/image_container.dart';
 import 'package:iiitnr/widgets/nav_bar.dart';
-
 import '../models/article_model.dart';
 
-
 class DiscoverScreen extends StatelessWidget {
-  const DiscoverScreen({super.key});
+  const DiscoverScreen({Key? key}) : super(key: key);
 
   static const routeName = '/discover';
 
@@ -51,7 +49,7 @@ class DiscoverScreen extends StatelessWidget {
           ),
         ),
         drawer: const MyAppDrawer(),
-        
+        body: _CategoryNews(tabs: tabs), // Add _CategoryNews widget here
       ),
     );
   }
@@ -108,11 +106,11 @@ class __CategoryNewsState extends State<_CategoryNews> {
             itemBuilder: ((context, index) {
               return InkWell(
                 onTap: () {
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   ArticleScreen.routeName,
-                  //   arguments: filteredArticles[index],
-                  // );
+                  Navigator.pushNamed(
+                    context,
+                    ArticleScreen.routeName,
+                    arguments: filteredArticles[index],
+                  );
                 },
                 child: Row(
                   children: [
@@ -173,6 +171,7 @@ class __CategoryNewsState extends State<_CategoryNews> {
 }
 
 void main() {
+  
   runApp(const MaterialApp(
     home: DiscoverScreen(),
   ));

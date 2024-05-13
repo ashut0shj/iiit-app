@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iiitnr/models/club_model.dart';
-// import 'package:iiitnr/screens/club_screen.dart';
-
 import 'package:iiitnr/widgets/image_container.dart';
 import 'package:iiitnr/widgets/nav_bar.dart';
 
-
 class ExploreScreen extends StatelessWidget {
-  const ExploreScreen({Key? key}) : super(key: key);
+  const ExploreScreen({super.key});
 
-  static const routeName = '/explore';
+  static const routeName = '/explore_clubs';
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +48,7 @@ class ExploreScreen extends StatelessWidget {
           ),
         ),
         drawer: const MyAppDrawer(),
-        
+        body: _CategoryNews(tabs: tabs), // Add _CategoryNews widget here
       ),
     );
   }
@@ -59,9 +56,9 @@ class ExploreScreen extends StatelessWidget {
 
 class _CategoryNews extends StatefulWidget {
   const _CategoryNews({
-    Key? key,
+    super.key,
     required this.tabs,
-  }) : super(key: key);
+  });
 
   final List<String> tabs;
 
@@ -86,7 +83,7 @@ class __CategoryNewsState extends State<_CategoryNews> {
         filteredClubs = allClubs;
       } else {
         filteredClubs =
-            allClubs.where((article) => article.category == category).toList();
+            allClubs.where((club) => club.category == category).toList();
       }
     });
   }
@@ -109,11 +106,7 @@ class __CategoryNewsState extends State<_CategoryNews> {
             itemBuilder: ((context, index) {
               return InkWell(
                 onTap: () {
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   ClubScreen.routeName,
-                  //   arguments: filteredClubs[index],
-                  // );
+                  // Navigate to club details screen
                 },
                 child: Row(
                   children: [
