@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app_ui/models/club_model.dart';
-import 'package:flutter_news_app_ui/screens/club_screen.dart';
-import 'package:flutter_news_app_ui/screens/screens.dart';
-import 'package:flutter_news_app_ui/widgets/image_container.dart';
-import 'package:flutter_news_app_ui/widgets/nav_bar.dart';
+import 'package:iiitnr/models/club_model.dart';
+// import 'package:iiitnr/screens/club_screen.dart';
 
-import '../models/article_model.dart';
-import '../widgets/bottom_nav_bar.dart';
+import 'package:iiitnr/widgets/image_container.dart';
+import 'package:iiitnr/widgets/nav_bar.dart';
+
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({Key? key}) : super(key: key);
@@ -53,8 +51,7 @@ class ExploreScreen extends StatelessWidget {
           ),
         ),
         drawer: const MyAppDrawer(),
-        bottomNavigationBar: const BottomNavBar(index: 1),
-        body: _CategoryNews(tabs: tabs),
+        
       ),
     );
   }
@@ -112,11 +109,11 @@ class __CategoryNewsState extends State<_CategoryNews> {
             itemBuilder: ((context, index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ClubScreen.routeName,
-                    arguments: filteredClubs[index],
-                  );
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   ClubScreen.routeName,
+                  //   arguments: filteredClubs[index],
+                  // );
                 },
                 child: Row(
                   children: [

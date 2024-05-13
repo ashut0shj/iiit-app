@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iiitnr/screens/screens.dart';
-import 'package:iiitnr/testf.dart';
+// import 'package:iiitnr/testf.dart';
 import 'package:iiitnr/screens/club.dart';
 import 'package:iiitnr/screens/forms.dart';
 import 'package:iiitnr/screens/discover.dart';
@@ -55,7 +55,7 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('User'),
-            onTap: () {Navigator.pushNamed(context, AdminScreen.routeName);},
+            onTap: () {},
           ),
     
           ListTile(
@@ -68,9 +68,7 @@ class MyAppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
-            onTap: () {Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const TestForm()));
+            onTap: () {
             },
           ),
         ],
