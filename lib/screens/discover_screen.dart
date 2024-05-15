@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:iiitnr/models/club_model.dart';
+import 'package:iiitnr/screens/article_screen.dart';
 import 'package:iiitnr/widgets/image_container.dart';
 import 'package:iiitnr/widgets/nav_bar.dart';
+import '../models/article_model.dart';
 
-class ExploreScreen extends StatelessWidget {
-  const ExploreScreen({super.key});
+class DiscoverScreen extends StatelessWidget {
+  const DiscoverScreen({Key? key}) : super(key: key);
 
-  static const routeName = '/explore_clubs';
+  static const routeName = '/discover';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ExploreScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Club',
+                'Feed',
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
@@ -56,9 +57,9 @@ class ExploreScreen extends StatelessWidget {
 
 class _CategoryNews extends StatefulWidget {
   const _CategoryNews({
-    super.key,
+    Key? key,
     required this.tabs,
-  });
+  }) : super(key: key);
 
   final List<String> tabs;
 
@@ -67,23 +68,22 @@ class _CategoryNews extends StatefulWidget {
 }
 
 class __CategoryNewsState extends State<_CategoryNews> {
-  late List<Clubs> filteredClubs;
-  late List<Clubs> allClubs;
+  late List<Article> filteredArticles;
+  late List<Article> allArticles;
 
   @override
   void initState() {
     super.initState();
-    allClubs = Clubs.clubs;
-    filteredClubs = allClubs;
+    allArticles = Article.articles;
+    filteredArticles = allArticles;
   }
 
   void filterArticles(String category) {
     setState(() {
       if (category == 'All') {
-        filteredClubs = allClubs;
+        filteredArticles = allArticles;
       } else {
-        filteredClubs =
-            allClubs.where((club) => club.category == category).toList();
+        filteredArticles = allArticles.where((article) => article.category == category).toList();
       }
     });
   }
@@ -102,11 +102,15 @@ class __CategoryNewsState extends State<_CategoryNews> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: filteredClubs.length,
+            itemCount: filteredArticles.length,
             itemBuilder: ((context, index) {
               return InkWell(
                 onTap: () {
-                  // Navigate to club details screen
+                  Navigator.pushNamed(
+                    context,
+                    ArticleScreen.routeName,
+                    arguments: filteredArticles[index],
+                  );
                 },
                 child: Row(
                   children: [
@@ -115,7 +119,7 @@ class __CategoryNewsState extends State<_CategoryNews> {
                       height: 80,
                       margin: const EdgeInsets.all(10.0),
                       borderRadius: 5,
-                      imageUrl: filteredClubs[index].imageUrl,
+                      imageUrl: filteredArticles[index].imageUrl,
                     ),
                     Expanded(
                       child: Column(
@@ -123,19 +127,31 @@ class __CategoryNewsState extends State<_CategoryNews> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            filteredClubs[index].title,
+                            filteredArticles[index].title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.subtitle1!.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 5),
                           Row(
                             children: [
+                              const Icon(
+                                Icons.group,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 5),
                               Text(
-                                filteredClubs[index].subtitle,
+                                filteredArticles[index].author,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(width: 20),
+                              const Icon(
+                                Icons.calendar_today,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${filteredArticles[index].views}',
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ],
@@ -155,7 +171,8 @@ class __CategoryNewsState extends State<_CategoryNews> {
 }
 
 void main() {
+  
   runApp(const MaterialApp(
-    home: ExploreScreen(),
+    home: DiscoverScreen(),
   ));
 }
