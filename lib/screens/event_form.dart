@@ -10,6 +10,7 @@ class EventForm extends StatefulWidget {
   const EventForm({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EventFormState createState() => _EventFormState();
 }
 
@@ -287,6 +288,7 @@ class _EventFormState extends State<EventForm> {
   }
 }
 
+// ignore: must_be_immutable
 class EventDetailsForm extends StatefulWidget {
   final String name;
   final String email;
@@ -298,7 +300,7 @@ class EventDetailsForm extends StatefulWidget {
   final String requests;
   File? image;
 
-  EventDetailsForm({
+  EventDetailsForm({super.key, 
     required this.name,
     required this.email,
     required this.position,
@@ -311,6 +313,7 @@ class EventDetailsForm extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _EventDetailsFormState createState() => _EventDetailsFormState();
 }
 

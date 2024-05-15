@@ -17,6 +17,7 @@ import 'package:iiitnr/screens/key_response.dart';
 import 'package:iiitnr/screens/letterrespomse.dart';
 import 'package:iiitnr/widgets/nav_bar.dart';
 import 'package:iiitnr/screens/calendar.dart';
+import 'package:iiitnr/screens/gym_entry.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         KeyRequisitionResponsesScreen.routeName: (context) => const KeyRequisitionResponsesScreen(),
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         CalendarScreen.routeName: (context) => const CalendarScreen(),
+        GymScreen.routeName: (context) => const GymScreen(),
 
       },
     );
@@ -144,6 +146,19 @@ class MainScreen extends StatelessWidget {
                 },
                 child: const Center(
                   child: Text('Calendar'),
+                ),
+              ),
+            ),
+          ),
+            Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, GymScreen.routeName);
+                },
+                child: const Center(
+                  child: Text('Gym Entry'),
                 ),
               ),
             ),
