@@ -5,6 +5,8 @@ import 'package:iiitnr/screens/forms.dart';
 import 'package:iiitnr/screens/event_form.dart'; 
 // import 'package:iiitnr/screens/discover.dart';
 import 'package:iiitnr/screens/grievanceresponses.dart';
+import 'package:iiitnr/screens/gym_card.dart';
+import 'package:iiitnr/screens/gympass_entry.dart';
 import 'package:iiitnr/screens/key_form.dart';
 import 'package:iiitnr/screens/resources_requisition.dart';
 import 'package:iiitnr/screens/grievance_form.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         CalendarScreen.routeName: (context) => const CalendarScreen(),
         GymScreen.routeName: (context) => const GymScreen(),
+        GymPassForm.routeName: (context) => const GymPassForm(),
+        GymPassEntriesScreen.routeName: (context) => const GymPassEntriesScreen(),
 
       },
     );

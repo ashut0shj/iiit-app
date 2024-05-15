@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 class GymPassForm extends StatefulWidget {
   static const String routeName = '/gym_pass_form';
 
-  const GymPassForm({Key? key}) : super(key: key);
+  const GymPassForm({super.key});
 
   @override
   _GymPassFormState createState() => _GymPassFormState();
