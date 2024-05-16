@@ -13,6 +13,8 @@ class EventResponse {
   final String eventName;
   final String eventDescription;
   final String eventId;
+  final String category;
+  final String clubName;
   bool approved;
   String comments;
 
@@ -28,6 +30,8 @@ class EventResponse {
     required this.eventName,
     required this.eventDescription,
     required this.eventId,
+    required this.category,
+    required this.clubName,
     this.approved = false,
     this.comments = '',
   });
@@ -47,6 +51,8 @@ class EventResponse {
       approved: map['approved'] ?? false,
       comments: map['comments'] ?? '',
       eventId: map['eventId'] ?? '',
+      category: map['category'] ?? '',
+      clubName: map['clubName'] ?? '',
     );
   }
 }
@@ -163,6 +169,8 @@ class _EventResponsesScreenState extends State<EventResponsesScreen>
                 Text('Requests: ${response.requests}'),
                 Text('Event Name: ${response.eventName}'),
                 Text('Event Description: ${response.eventDescription}'),
+                Text('category: ${response.category}'),
+                Text('Club Name: ${response.clubName}'),
                 Row(
                   children: [
                     ElevatedButton(

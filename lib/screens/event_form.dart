@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:firebase_database/firebase_database.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 class EventForm extends StatefulWidget {
   static const String routeName = '/event_form';
@@ -21,6 +23,8 @@ class _EventFormState extends State<EventForm> {
   String _requirements = '';
   double? _cost;
   String _requests = '';
+  String _clubName = ''; // Add club name variable
+  String _category = 'Technical'; // Initialize _category to 'Technical'
 
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
@@ -43,6 +47,8 @@ class _EventFormState extends State<EventForm> {
             cost: _cost,
             requests: _requests,
             image: _image, // Pass _image to EventDetailsForm
+            category: _category, // Pass _category to EventDetailsForm
+            clubName: _clubName, // Pass _clubName to EventDetailsForm
           ),
         ),
       );
@@ -170,6 +176,43 @@ class _EventFormState extends State<EventForm> {
                 _requests = value!;
               },
             ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Club Name', // Add club name field
+                icon: Icon(Icons.group),
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter the club name.';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _clubName = value!;
+              },
+            ),
+            DropdownButtonFormField<String>(
+              value: _category,
+              decoration: const InputDecoration(
+                labelText: 'Category',
+                icon: Icon(Icons.category),
+              ),
+              items: <String>[
+                'Technical',
+                'Cultural',
+                'Miscellaneous',
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  _category = newValue!;
+                });
+              },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -273,6 +316,7 @@ class _EventFormState extends State<EventForm> {
   }
 }
 
+
 class EventDetailsForm extends StatefulWidget {
   final String name;
   final String email;
@@ -283,6 +327,8 @@ class EventDetailsForm extends StatefulWidget {
   final double? cost;
   final String requests;
   File? image;
+  String category;
+  String clubName; // Add club name variable
 
   EventDetailsForm({
     super.key,
@@ -295,6 +341,8 @@ class EventDetailsForm extends StatefulWidget {
     required this.cost,
     required this.requests,
     required this.image,
+    required this.category,
+    required this.clubName, // Pass club name from EventForm
   });
 
   @override
@@ -325,6 +373,8 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
       'eventDescription': _eventDescription,
       'imageUrl': imageUrl,
       'approveStatus': false,
+      'category': widget.category, // Save category to database
+      'clubName': widget.clubName, // Save club name to database
     });
 
     // Store the reference ID (key) in the database entry itself
@@ -456,5 +506,3 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
     );
   }
 }
-
-
