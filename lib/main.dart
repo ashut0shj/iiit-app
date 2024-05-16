@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
         ArticleScreen.routeName: (context) => const ArticleScreen(),
         CalendarScreen.routeName: (context) => const CalendarScreen(),
         GymScreen.routeName: (context) => const GymScreen(),
-        GymPassForm.routeName: (context) => const GymPassForm(),
-        GymPassEntriesScreen.routeName: (context) => const GymPassEntriesScreen(),
+        GymPassForm.routeName: (context) => GymPassForm(),
+        GymPassEntriesScreen.routeName: (context) => GymPassEntriesScreen(),
 
       },
     );

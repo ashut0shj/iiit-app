@@ -12,9 +12,10 @@ class GymPassForm extends StatefulWidget {
 
 class _GymPassFormState extends State<GymPassForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _name = '';
   String _cardNumber = '';
-  String _category = '';
-  String _gender = '';
+  bool _submitted = false;
+  bool _inside = false;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -24,12 +25,14 @@ class _GymPassFormState extends State<GymPassForm> {
       DatabaseReference passRef =
           FirebaseDatabase.instance.reference().child('gym_passes');
       passRef.push().set({
+        'name': _name,
         'card_number': _cardNumber,
-        'category': _category,
-        'gender': _gender,
+        'inside': _inside,
       });
 
-      // Navigate to success page or do something else
+      setState(() {
+        _submitted = true;
+      });
     }
   }
 
@@ -46,6 +49,21 @@ class _GymPassFormState extends State<GymPassForm> {
           children: <Widget>[
             TextFormField(
               decoration: const InputDecoration(
+                labelText: 'Name',
+                icon: Icon(Icons.person),
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your name.';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _name = value!;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
                 labelText: 'Card Number',
                 icon: Icon(Icons.credit_card),
               ),
@@ -57,36 +75,6 @@ class _GymPassFormState extends State<GymPassForm> {
               },
               onSaved: (value) {
                 _cardNumber = value!;
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Category (Student/Faculty)',
-                icon: Icon(Icons.category),
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your category.';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _category = value!;
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Gender (Male/Female)',
-                icon: Icon(Icons.person),
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your gender.';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _gender = value!;
               },
             ),
             const SizedBox(height: 20.0),
@@ -103,6 +91,17 @@ class _GymPassFormState extends State<GymPassForm> {
               ),
               child: const Text('Submit'),
             ),
+            if (_submitted) // Show the inside status if form is submitted
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Text(
+                  _inside ? 'Inside' : 'Outside',
+                  style: TextStyle(
+                    fontSize: 30.0, // Set a larger font size
+                    color: _inside ? Colors.green : Colors.red,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
