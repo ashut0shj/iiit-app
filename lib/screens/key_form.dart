@@ -28,7 +28,8 @@ class _KeyRequisitionFormState extends State<KeyRequisitionForm> {
       _formKey.currentState!.save();
 
       // Save data to Firebase
-      DatabaseReference keyRequisitionRef = FirebaseDatabase.instance.reference().child('key_requisitions');
+      DatabaseReference keyRequisitionRef =
+          FirebaseDatabase.instance.reference().child('key_requisitions');
       keyRequisitionRef.push().set({
         'name': _name,
         'position': _position,
@@ -42,8 +43,29 @@ class _KeyRequisitionFormState extends State<KeyRequisitionForm> {
         'email': _email,
       });
 
-      // Navigate to success page or do something else
+      // Show submit dialog
+      _showSubmitDialog(context);
     }
+  }
+
+  void _showSubmitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Form Submitted'),
+          content: Text('Your key requisition form has been successfully submitted!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   _selectDate(BuildContext context) async {

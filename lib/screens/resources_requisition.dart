@@ -4,10 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 class ResourcesRequisitionForm extends StatefulWidget {
   static const String routeName = '/resources_requisition_form';
 
-  const ResourcesRequisitionForm({super.key});
+  const ResourcesRequisitionForm({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ResourcesRequisitionFormState createState() =>
       _ResourcesRequisitionFormState();
 }
@@ -46,10 +45,34 @@ class _ResourcesRequisitionFormState extends State<ResourcesRequisitionForm> {
         'position_in_club': _positionInClub,
         'email': _email,
         'contact_no': _contactNo,
+      }).then((_) {
+        // Show submit dialog
+        _showSubmitDialog(context);
+      }).catchError((error) {
+        // Handle error
+        print("Error submitting form: $error");
       });
-
-      // Navigate to success page or do something else
     }
+  }
+
+  void _showSubmitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Form Submitted'),
+          content: Text('Your resources requisition form has been successfully submitted!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

@@ -39,8 +39,29 @@ class _LetterOfRecommendationFormState
         'request_reason': _requestReason,
       });
 
-      // Navigate to success page or do something else
+      // Show submit dialog
+      _showSubmitDialog(context);
     }
+  }
+
+  void _showSubmitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Form Submitted'),
+          content: Text('Your letter of recommendation form has been successfully submitted!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

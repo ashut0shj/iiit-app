@@ -7,7 +7,6 @@ class GrievanceForm extends StatefulWidget {
   const GrievanceForm({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _GrievanceFormState createState() => _GrievanceFormState();
 }
 
@@ -19,26 +18,47 @@ class _GrievanceFormState extends State<GrievanceForm> {
   String _authority = '';
 
   void _submitForm() {
-  if (_formKey.currentState!.validate()) {
-    _formKey.currentState!.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
-    // Save data to Firebase
-    DatabaseReference grievanceRef =
-        FirebaseDatabase.instance.reference().child('grievances');
-    DatabaseReference newGrievanceRef = grievanceRef.push();
-    String grievanceId = newGrievanceRef.key!; // Generate a unique grievanceId
-    newGrievanceRef.set({
-      'grievanceId': grievanceId,
-      'name': _name,
-      'email': _email,
-      'grievance': _grievance,
-      'authority': _authority,
-      'approved': false,
-    });
+      // Save data to Firebase
+      DatabaseReference grievanceRef =
+          FirebaseDatabase.instance.reference().child('grievances');
+      DatabaseReference newGrievanceRef = grievanceRef.push();
+      String grievanceId = newGrievanceRef.key!; // Generate a unique grievanceId
+      newGrievanceRef.set({
+        'grievanceId': grievanceId,
+        'name': _name,
+        'email': _email,
+        'grievance': _grievance,
+        'authority': _authority,
+        'approved': false,
+      });
 
-    // Navigate to success page or do something else
+      // Show submit dialog
+      _showSubmitDialog(context);
+    }
   }
-}
+
+  void _showSubmitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Form Submitted'),
+          content: Text('Your grievance has been successfully submitted!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
