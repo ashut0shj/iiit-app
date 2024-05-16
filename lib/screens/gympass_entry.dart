@@ -20,42 +20,50 @@ class GymPassEntriesScreen extends StatefulWidget {
   _GymPassEntriesScreenState createState() => _GymPassEntriesScreenState();
 }
 
-class _GymPassEntriesScreenState extends State<GymPassEntriesScreen> {
-  final DatabaseReference _passRef =
-      FirebaseDatabase.instance.reference().child('gym_passes');
-  late List<GymPass> _passes = [];
+class _GymPassEntriesScreenState extends State<GymPassEntriesScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  final List<GymPass> _passes = [];
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _fetchGymPasses();
   }
 
   void _fetchGymPasses() {
-    _passRef.onValue.listen((event) {
+    DatabaseReference passRef =
+        FirebaseDatabase.instance.reference().child('gym_passes');
+    passRef.onValue.listen((event) {
+      _passes.clear();
       if (event.snapshot.value != null) {
-        Map<dynamic, dynamic> values =
-            event.snapshot.value as Map<dynamic, dynamic>;
-        List<GymPass> passes = [];
-        values.forEach((key, value) {
-          passes.add(GymPass(
-            name: value['name'],
-            cardNumber: value['card_number'],
-            inside: value['inside'] ?? false,
-          ));
-        });
-        setState(() {
-          _passes = passes;
-        });
+        Map<dynamic, dynamic>? values =
+            event.snapshot.value as Map<dynamic, dynamic>?;
+        if (values != null) {
+          values.forEach((key, value) {
+            GymPass pass = GymPass(
+              name: value['name'] ?? '',
+              cardNumber: value['card_number'] ?? '',
+              inside: value['inside'] ?? false,
+            );
+            _passes.add(pass);
+          });
+          setState(() {});
+        }
       }
     });
   }
 
-  void _updateInsideStatus(int index, bool inside) {
-    setState(() {
-      _passes[index].inside = inside;
+  void _updateGymPassStatus(GymPass pass, bool inside) {
+    pass.inside = inside;
+    DatabaseReference passRef =
+        FirebaseDatabase.instance.reference().child('gym_passes');
+    passRef.child(pass.cardNumber).update({
+      'inside': inside,
+    }).then((_) {
+      setState(() {});
     });
-    _passRef.child(index.toString()).update({'inside': inside});
   }
 
   @override
@@ -63,34 +71,42 @@ class _GymPassEntriesScreenState extends State<GymPassEntriesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gym Pass Entries'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Inside'),
+            Tab(text: 'Outside'),
+          ],
+        ),
       ),
-      body: ListView.builder(
-        itemCount: _passes.length,
-        itemBuilder: (context, index) {
-          final pass = _passes[index];
-          return ListTile(
-            title: Text('Name: ${pass.name}'),
-            subtitle: Text('Card Number: ${pass.cardNumber}'),
-            trailing: Container(
-              width: 100,
-              height: 30,
-              decoration: BoxDecoration(
-                color: pass.inside ? Colors.green : Colors.red,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: TextButton(
-                onPressed: () {
-                  _updateInsideStatus(index, !pass.inside);
-                },
-                child: Text(
-                  pass.inside ? 'Inside' : 'Outside',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          );
-        },
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildPassList(inside: true),
+          _buildPassList(inside: false),
+        ],
       ),
+    );
+  }
+
+  Widget _buildPassList({required bool inside}) {
+    final filteredPasses =
+        _passes.where((pass) => pass.inside == inside).toList();
+    return ListView.builder(
+      itemCount: filteredPasses.length,
+      itemBuilder: (context, index) {
+        final pass = filteredPasses[index];
+        return ListTile(
+          title: Text('Name: ${pass.name}'),
+          subtitle: Text('Card Number: ${pass.cardNumber}'),
+          trailing: Switch(
+            value: pass.inside,
+            onChanged: (value) {
+              _updateGymPassStatus(pass, value);
+            },
+          ),
+        );
+      },
     );
   }
 }

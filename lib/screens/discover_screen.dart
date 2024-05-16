@@ -44,6 +44,7 @@ class DiscoverScreen extends StatelessWidget {
                 'assets/logo.png',
                 width: 50,
                 height: 50,
+                
               ),
             ],
           ),

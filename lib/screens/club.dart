@@ -36,7 +36,7 @@ class ExploreScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Club',
+                'Clubs',
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
