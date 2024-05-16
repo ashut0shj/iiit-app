@@ -1,8 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-// R
-
 class EventResponse {
   final String name;
   final String email;
@@ -14,6 +12,7 @@ class EventResponse {
   final String requests;
   final String eventName;
   final String eventDescription;
+  final String eventId;
   bool approved;
   String comments;
 
@@ -28,6 +27,7 @@ class EventResponse {
     required this.requests,
     required this.eventName,
     required this.eventDescription,
+    required this.eventId,
     this.approved = false,
     this.comments = '',
   });
@@ -46,6 +46,7 @@ class EventResponse {
       eventDescription: map['eventDescription'] ?? '',
       approved: map['approved'] ?? false,
       comments: map['comments'] ?? '',
+      eventId: map['eventId'] ?? '',
     );
   }
 }
@@ -69,18 +70,21 @@ class EventResponsesScreen extends StatefulWidget {
   _EventResponsesScreenState createState() => _EventResponsesScreenState();
 }
 
-class _EventResponsesScreenState extends State<EventResponsesScreen> {
+class _EventResponsesScreenState extends State<EventResponsesScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   final List<EventResponse> _responses = [];
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _fetchEventResponses();
   }
 
   void _fetchEventResponses() {
     DatabaseReference eventRef =
-        FirebaseDatabase.instance.reference().child('events');
+        FirebaseDatabase.instance.reference().child('event_details');
     eventRef.onValue.listen((event) {
       _responses.clear();
       if (event.snapshot.value != null) {
@@ -95,19 +99,21 @@ class _EventResponsesScreenState extends State<EventResponsesScreen> {
   }
 
   void _updateEventResponse(EventResponse response, bool approve) {
-    // Update the approval status and comments for the event response
     response.approved = approve;
-    // Save the changes to the Firebase database
     DatabaseReference eventRef =
-        FirebaseDatabase.instance.reference().child('events');
-    eventRef.child(response.name).update({
-      'approved': response.approved,
-      'comments': response.comments,
-    }).then((_) {
-      setState(() {
-        // Refresh the UI
+        FirebaseDatabase.instance.reference().child('event_details');
+    if (approve) {
+      eventRef.child(response.eventId).update({
+        'approved': response.approved,
+        'comments': response.comments,
+      }).then((_) {
+        setState(() {});
       });
-    });
+    } else {
+      eventRef.child(response.eventId).remove().then((_) {
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -115,56 +121,75 @@ class _EventResponsesScreenState extends State<EventResponsesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Responses'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'All'),
+            Tab(text: 'Approved'),
+          ],
+        ),
       ),
-      body: ListView.builder(
-        itemCount: _responses.length,
-        itemBuilder: (context, index) {
-          final response = _responses[index];
-          return Card(
-            margin: EdgeInsets.all(10),
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Name: ${response.name}'),
-                  Text('Email: ${response.email}'),
-                  Text('Position: ${response.position}'),
-                  Text('Selected Date: ${response.selectedDate}'),
-                  Text('Selected Time: ${response.selectedTime}'),
-                  Text('Requirements: ${response.requirements}'),
-                  Text('Cost: ${response.cost ?? 'NA'}'),
-                  Text('Requests: ${response.requests}'),
-                  Text('Event Name: ${response.eventName}'),
-                  Text('Event Description: ${response.eventDescription}'),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          _updateEventResponse(response, true);
-                        },
-                        child: Text('Approve'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          _updateEventResponse(response, false);
-                        },
-                        child: Text('Reject'),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Comments'),
-                    onChanged: (value) {
-                      response.comments = value;
-                    },
-                  ),
-                ],
-              ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildResponseList(approved: false),
+          _buildResponseList(approved: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResponseList({required bool approved}) {
+    final filteredResponses =
+        _responses.where((response) => response.approved == approved).toList();
+    return ListView.builder(
+      itemCount: filteredResponses.length,
+      itemBuilder: (context, index) {
+        final response = filteredResponses[index];
+        return Card(
+          margin: EdgeInsets.all(10),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Name: ${response.name}'),
+                Text('Email: ${response.email}'),
+                Text('Position: ${response.position}'),
+                Text('Selected Date: ${response.selectedDate}'),
+                Text('Selected Time: ${response.selectedTime}'),
+                Text('Requirements: ${response.requirements}'),
+                Text('Cost: ${response.cost ?? 'NA'}'),
+                Text('Requests: ${response.requests}'),
+                Text('Event Name: ${response.eventName}'),
+                Text('Event Description: ${response.eventDescription}'),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _updateEventResponse(response, true);
+                      },
+                      child: Text('Approve'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _updateEventResponse(response, false);
+                      },
+                      child: Text('Reject'),
+                    ),
+                  ],
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'Comments'),
+                  onChanged: (value) {
+                    response.comments = value;
+                  },
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
